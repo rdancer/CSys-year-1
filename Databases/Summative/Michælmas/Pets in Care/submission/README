@@ -2,11 +2,11 @@ The submission comprises the following files:
 
 Note: SQL to be compatible with MySQL version "5.1.39-community-log".
 
-    (1) Pgwkv79_Pets.sql
+    (1) Jan Minar - Databases - Database Scheme and Data.sql
 	    - plain text ASCII (UTF-8)
 	    - database scheme + data
-	    - the file name is as prescribed in the assignment, and contains
-	      the submitter's Durham University user name
+	    - database to be called "Pgvkw79_Pets", as prescribed in the
+	      assignment (the template being: "P<USER_NAME>_Pets")
     (2) Jan Minar - Databases - Queries.sql
             - plain text ASCII (UTF-8)
 	    - with comments
