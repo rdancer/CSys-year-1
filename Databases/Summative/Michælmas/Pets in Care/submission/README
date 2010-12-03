@@ -1,0 +1,17 @@
+The submission comprises the following files:
+
+Note: SQL to be compatible with MySQL version "5.1.39-community-log".
+
+    (1) Pgwkv79_Pets.sql
+	    - plain text ASCII (UTF-8)
+	    - database scheme + data
+	    - the file name is as prescribed in the assignment, and contains
+	      the submitter's Durham University user name
+    (2) Jan Minar - Databases - Queries.sql
+            - plain text ASCII (UTF-8)
+	    - with comments
+	    - so that the grader can copy-and-paste individual queries into
+	      MyPHPAdmin
+    (3) Jan Minar - Databases - Report.pdf
+	    - PDF
+	    - contains the ERD diagram (schemespy)
