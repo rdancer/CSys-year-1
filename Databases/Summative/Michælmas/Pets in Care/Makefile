@@ -17,7 +17,7 @@
 
 LATEX = latex
 BIBTEX = bibtex
-BASE = introduction-to-programming-michaelmas-2010-summative
+BASE = computer-systems-databases-michaelmas-2010-summative
 TEX_FILE = $(BASE).tex
 PDF_FILE = $(BASE).pdf
 BIBTEX_DATA = references.bib
