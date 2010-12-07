@@ -21,7 +21,7 @@
 % with this work; if not, write to the Free Software Foundation, Inc.,
 % 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-\documentclass[10pt]{report}
+\documentclass[10pt]{article}
 
 
 \usepackage[utf8]{inputenc}
@@ -65,7 +65,7 @@
 % Note: This is a ‘report’
 
 
-\chapter{Abstract}
+\section{Abstract}
 \thispagestyle{fancy}
 
 In this exercise,\footnote{This is a summative work for the Computer Systems (Introduction to Databases) sub-module taught at Durham University, UK in Michælmas 2010.  It is an updated version of \cite{minarcsys}.} we will develop a database that captures the business of {\em Pets in Care}, a fictional company which operates a network of veterinary care clinics in the United Kingdom.
@@ -74,18 +74,23 @@ The source code for the programs used in this exercise accompanies this report, 
 
 % Note: use \begin{sidewaysfigure} for a landscape figure with proper captioning
 \begin{figure}
-    \centering
-    % Border around the image
-    %\setlength\fboxsep{0pt}
-    %\setlength\fboxrule{0.5pt}
-    \fbox{
-	\includegraphics[width=\textwidth]{erd.png}
+
+    % Reduce margins -- solution from
+    % http://stackoverflow.com/questions/857483/custom-margin-settings-for-figure-in-latex
+    % accessed on 2010-12-07
+    \noindent
+    \makebox[\textwidth]{
+	\fbox{
+	    \includegraphics[width=0.9\paperwidth]{erd.png}
+	}
     }
+
     \caption{
 	Entity Relationship Diagram for the Pets in Care database (cf. Minář 2008, p2)
     }
     \label{flowchart}
 \end{figure}
+
 
 %%%%%%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%% % ``Introduction (20%) Explain the hypothesis(es) of the experiment so an
@@ -763,12 +768,17 @@ The source code for the programs used in this exercise accompanies this report, 
 
 
 
-\chapter{Notes}
+
+
+\section{Notes}
 \thispagestyle{fancy}
 
-The names in the database are, for a lack of better source, taken from the list of the sitting Members of Parliament \cite{mps}, as well as from \cite{minarcsys}.  UK postal addresses are slightly modified postal addresses of {\em Burger King} \cite{burgerking} and {\em McDonald's} \cite{mcdonalds} restaurants.
+The names in the database are, for a lack of better source, taken from the list of the sitting Members of Parliament \cite{mps}, as well as from \cite{minarcsys}.  UK postal addresses are slightly modified postal addresses of {\em Burger King} \cite{burgerking} and {\em McDonald's} \cite{mcdonalds} restaurants.  Pet names are from \cite{petnames}.
 
-\renewcommand\bibname{Bibliography and Data Sources}
+%\renewcommand\bibname{Bibliography and Data Sources}
+
+% Have the references on a new page
+\pagebreak
 \bibliography{references}
 \thispagestyle{fancy}
 
