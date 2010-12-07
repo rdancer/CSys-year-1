@@ -55,7 +55,7 @@
 % No LaTeX command to make a subtitle, but possible using custom code (not
 % including due to absence of license, but it is possible):
 % <http://groups.google.com/group/comp.text.tex/msg/3aa4f67d8b3a979b?hl=en-EN&pli=1>
-\title{Pets in Care\\Computer Systems (Databases)\\Summative Assignment\\Michælmas 2010}
+\title{Database Design and Implementation for {\em Pets in Care}}
 
 \begin{document}
 \bibliographystyle{agsm}
@@ -68,9 +68,9 @@
 \section{Abstract}
 \thispagestyle{fancy}
 
-In this exercise,\footnote{This is a summative work for the Computer Systems (Introduction to Databases) sub-module taught at Durham University, UK in Michælmas 2010.  It is an updated version of \cite{minarcsys}.} we will develop a database that captures the business of {\em Pets in Care}, a fictional company which operates a network of veterinary care clinics in the United Kingdom.
+In this exercise,\footnote{This is a summative work for the Computer Systems (Introduction to Databases) sub-module taught at Durham University, UK in Michælmas 2010.  It is based on our previous work in \cite{minarcsys}} we will develop a database that captures the business of {\em Pets in Care}, a fictional company which operates a network of veterinary care clinics in the United Kingdom.
 
-The source code for the programs used in this exercise accompanies this report, and will be published on the author's web site after the moratorium imposed by \cite{plagiarism} will have passed.
+%The source code for the programs used in this exercise accompanies this report, and will be published on the author's web site after the moratorium imposed by \cite{plagiarism} will have passed.
 
 % Note: use \begin{sidewaysfigure} for a landscape figure with proper captioning
 \begin{figure}
@@ -86,7 +86,7 @@ The source code for the programs used in this exercise accompanies this report, 
     }
 
     \caption{
-	Entity Relationship Diagram for the Pets in Care database (cf. Minář 2008, p2)
+	Entity Relationship Diagram for the Pets in Care database (based on Minář 2008, p2)
     }
     \label{flowchart}
 \end{figure}
@@ -770,10 +770,16 @@ The source code for the programs used in this exercise accompanies this report, 
 
 
 
-\section{Notes}
+\section{Notes and Acknowledgements}
 \thispagestyle{fancy}
 
 The names in the database are, for a lack of better source, taken from the list of the sitting Members of Parliament \cite{mps}, as well as from \cite{minarcsys}.  UK postal addresses are slightly modified postal addresses of {\em Burger King} \cite{burgerking} and {\em McDonald's} \cite{mcdonalds} restaurants.  Pet names are from \cite{petnames}.
+
+%The database is based on our previous work in \cite{minarcsys}.
+
+The source code of this exercise will be published on the author's web site after the moratorium imposed by \cite{plagiarism} will have passed.
+
+Country codes in the database are according to \cite{iso3166}.
 
 %\renewcommand\bibname{Bibliography and Data Sources}
 
