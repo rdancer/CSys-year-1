@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: myeusql.dur.ac.uk
--- Generation Time: Dec 07, 2010 at 07:39 AM
+-- Generation Time: Dec 07, 2010 at 11:24 PM
 -- Server version: 5.1.39
 -- PHP Version: 5.3.3
 
@@ -37,12 +37,6 @@ CREATE TABLE IF NOT EXISTS `clinics` (
   UNIQUE KEY `id_public` (`id_public`),
   KEY `postal_address_id` (`postal_address_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
-
---
--- RELATIONS FOR TABLE `clinics`:
---   `postal_address_id`
---       `postal_addresses` -> `id`
---
 
 --
 -- Dumping data for table `clinics`
@@ -346,18 +340,6 @@ CREATE TABLE IF NOT EXISTS `employees` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Employees of the company' AUTO_INCREMENT=24 ;
 
 --
--- RELATIONS FOR TABLE `employees`:
---   `sex`
---       `sex` -> `sex`
---   `job_position_id`
---       `job_positions` -> `id`
---   `clinic_id`
---       `clinics` -> `id`
---   `postal_address_id`
---       `postal_addresses` -> `id`
---
-
---
 -- Dumping data for table `employees`
 --
 
@@ -426,14 +408,6 @@ CREATE TABLE IF NOT EXISTS `matrix_treatment_types_pet_types` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Match treatment types and pet types' AUTO_INCREMENT=47 ;
 
 --
--- RELATIONS FOR TABLE `matrix_treatment_types_pet_types`:
---   `treatment_type_id`
---       `treatment_types` -> `id`
---   `pet_type_id`
---       `pet_types` -> `id`
---
-
---
 -- Dumping data for table `matrix_treatment_types_pet_types`
 --
 
@@ -499,12 +473,6 @@ CREATE TABLE IF NOT EXISTS `owners` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Owners of the pets we register and treat' AUTO_INCREMENT=11 ;
 
 --
--- RELATIONS FOR TABLE `owners`:
---   `postal_address_id`
---       `postal_addresses` -> `id`
---
-
---
 -- Dumping data for table `owners`
 --
 
@@ -537,12 +505,6 @@ CREATE TABLE IF NOT EXISTS `pens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Lists all the pens we have at all the clinics' AUTO_INCREMENT=1 ;
 
 --
--- RELATIONS FOR TABLE `pens`:
---   `clinic_id`
---       `clinics` -> `id`
---
-
---
 -- Dumping data for table `pens`
 --
 
@@ -569,14 +531,6 @@ CREATE TABLE IF NOT EXISTS `pen_bookings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Bookings (start, end) of pets into pens' AUTO_INCREMENT=1 ;
 
 --
--- RELATIONS FOR TABLE `pen_bookings`:
---   `pet_id`
---       `pets` -> `id`
---   `pen_id`
---       `pens` -> `id`
---
-
---
 -- Dumping data for table `pen_bookings`
 --
 
@@ -589,6 +543,7 @@ CREATE TABLE IF NOT EXISTS `pen_bookings` (
 
 CREATE TABLE IF NOT EXISTS `pets` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_public` bigint(20) NOT NULL,
   `pet_type_id` bigint(20) NOT NULL,
   `name` text COLLATE utf8_unicode_ci NOT NULL,
   `sex` char(1) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '''M'' - male; ''F'' - female; NULL - unknown or n/a',
@@ -605,80 +560,70 @@ CREATE TABLE IF NOT EXISTS `pets` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='All pets we have registered' AUTO_INCREMENT=121 ;
 
 --
--- RELATIONS FOR TABLE `pets`:
---   `sex`
---       `sex` -> `sex`
---   `owner_id`
---       `owners` -> `id`
---   `pet_type_id`
---       `pet_types` -> `id`
---
-
---
 -- Dumping data for table `pets`
 --
 
-INSERT INTO `pets` (`id`, `pet_type_id`, `name`, `sex`, `owner_id`, `registered_since`, `date_of_birth`, `is_alive`, `neutered`, `note`) VALUES
-(61, 4, 'Max', 'M', 4, '1995-03-02 00:00:00', '1994-10-07', 1, NULL, NULL),
-(62, 4, 'Molly', 'M', 3, '1995-04-14 00:00:00', '1994-09-28', 1, NULL, NULL),
-(63, 7, 'Buddy', 'M', 7, '1995-05-04 00:00:00', '1994-08-24', 1, NULL, NULL),
-(64, 7, 'Maggie', 'F', 7, '1995-05-10 00:00:00', '1993-04-19', 1, NULL, NULL),
-(65, 6, 'Lady', 'F', 8, '1995-06-30 00:00:00', '1992-08-25', 1, NULL, NULL),
-(66, 3, 'Misty', 'M', 8, '1995-07-20 00:00:00', '1993-04-19', 1, NULL, NULL),
-(67, 4, 'Sam', 'M', 8, '1995-08-03 00:00:00', '1994-01-12', 0, NULL, NULL),
-(68, 13, 'Brandy', 'F', 3, '1995-08-15 00:00:00', '1994-03-15', 1, NULL, NULL),
-(69, 1, 'Lucky', 'F', 6, '1995-09-07 00:00:00', '1994-10-26', 1, 1, NULL),
-(70, 11, 'Shadow', 'M', 10, '1995-09-12 00:00:00', '1992-02-23', 0, NULL, NULL),
-(71, 1, 'Bear', 'F', 9, '1996-01-04 00:00:00', '1993-07-22', 1, NULL, NULL),
-(72, 12, 'Samantha', 'F', 10, '1996-03-18 00:00:00', '1994-09-03', 1, NULL, NULL),
-(73, 10, 'Pepper', 'F', 2, '1996-03-19 00:00:00', '1994-05-08', 1, NULL, NULL),
-(74, 4, 'Ginger', 'F', 1, '1996-05-09 00:00:00', '1994-06-12', 1, NULL, NULL),
-(75, 15, 'Jake', 'M', 10, '1996-06-18 00:00:00', '1993-02-28', 1, NULL, NULL),
-(76, 11, 'Missy', 'F', 6, '1996-07-01 00:00:00', '1994-03-13', 1, NULL, NULL),
-(77, 14, 'Muffin', 'M', 2, '1996-07-31 00:00:00', '1993-05-22', 1, NULL, NULL),
-(78, 1, 'Charlie', 'F', 3, '1996-08-12 00:00:00', '1992-08-06', 1, NULL, NULL),
-(79, 4, 'Lucy', 'F', 3, '1996-12-13 00:00:00', '1992-07-04', 1, NULL, NULL),
-(80, 5, 'Rusty', 'M', 2, '1997-01-03 00:00:00', '1992-12-02', 1, NULL, NULL),
-(81, 10, 'Bandit', 'M', 7, '1997-02-28 00:00:00', '1993-11-17', 1, 1, NULL),
-(82, 1, 'Daisy', 'F', 8, '1997-03-04 00:00:00', '1994-09-28', 1, NULL, NULL),
-(83, 4, 'Casey', 'M', 9, '1997-03-11 00:00:00', '1993-01-28', 1, NULL, NULL),
-(84, 4, 'Rocky', 'F', 7, '1997-03-27 00:00:00', '1994-12-10', 1, NULL, NULL),
-(85, 10, 'Sandy', 'M', 7, '1997-04-10 00:00:00', '1994-03-07', 1, NULL, NULL),
-(86, 15, 'Princess', 'M', 8, '1997-05-23 00:00:00', '1993-02-28', 1, NULL, NULL),
-(87, 7, 'Toby', 'F', 10, '1997-07-03 00:00:00', '1993-09-17', 1, NULL, NULL),
-(88, 1, 'Sheba', 'M', 9, '1997-07-21 00:00:00', '1994-02-19', 1, NULL, NULL),
-(89, 14, 'Sadie', 'F', 7, '1997-07-31 00:00:00', '1994-09-14', 1, 1, NULL),
-(90, 8, 'Smokey', 'F', 6, '1997-08-12 00:00:00', '1992-07-23', 0, NULL, NULL),
-(91, 1, 'Heidi', 'F', 2, '1997-08-13 00:00:00', '1993-11-17', 1, NULL, NULL),
-(92, 15, 'Mandy', 'M', 8, '1997-11-13 00:00:00', '1992-02-23', 1, NULL, NULL),
-(93, 8, 'Tiger', 'F', 2, '1997-11-17 00:00:00', '1994-08-24', 1, NULL, NULL),
-(94, 3, 'Baby', 'M', 5, '1997-11-21 00:00:00', '1993-05-22', 1, NULL, NULL),
-(95, 12, 'Buster', 'M', 8, '1997-12-24 00:00:00', '1993-04-16', 1, NULL, NULL),
-(96, 3, 'Katie', 'F', 3, '1998-01-02 00:00:00', '1994-01-12', 1, NULL, NULL),
-(97, 1, 'Murphy', 'F', 6, '1998-02-19 00:00:00', '1994-06-12', 1, NULL, NULL),
-(98, 8, 'Patches', 'M', 9, '1998-04-01 00:00:00', '1994-05-23', 1, NULL, NULL),
-(99, 3, 'Sasha', 'F', 7, '1998-04-14 00:00:00', '1993-08-27', 1, NULL, NULL),
-(100, 10, 'Buffy', 'F', 5, '1998-04-27 00:00:00', '1994-10-07', 1, NULL, NULL),
-(101, 15, 'Nikki', 'F', 4, '1998-04-29 00:00:00', '1994-09-14', 1, 1, NULL),
-(102, 13, 'Cody', 'M', 9, '1998-10-23 00:00:00', '1994-08-16', 1, 1, NULL),
-(103, 11, 'Bailey', 'F', 5, '1998-11-23 00:00:00', '1993-02-26', 1, NULL, NULL),
-(104, 9, 'Penny', 'F', 8, '1999-02-05 00:00:00', '1994-09-14', 0, NULL, NULL),
-(105, 14, 'Tasha', 'F', 9, '1999-02-24 00:00:00', '1992-07-04', 1, NULL, NULL),
-(106, 9, 'Chelsea', 'F', 1, '1999-06-04 00:00:00', '1993-11-17', 1, NULL, NULL),
-(107, 12, 'Annie', 'M', 9, '1999-06-09 00:00:00', '1994-09-17', 1, NULL, NULL),
-(108, 1, 'Angel', 'F', 7, '1999-08-19 00:00:00', '1993-02-26', 1, NULL, NULL),
-(109, 2, 'Kitty', 'F', 7, '1999-09-03 00:00:00', '1992-09-27', 1, NULL, NULL),
-(110, 4, 'Alex', 'F', 3, '1999-10-28 00:00:00', '1992-07-23', 1, NULL, NULL),
-(111, 7, 'Barney', 'M', 4, '1999-11-05 00:00:00', '1994-08-17', 1, NULL, NULL),
-(112, 10, 'Duke', 'M', 1, '2000-01-11 00:00:00', '1994-03-13', 1, NULL, NULL),
-(113, 15, 'Sparky', 'M', 1, '2000-02-17 00:00:00', '1992-02-23', 1, NULL, NULL),
-(114, 3, 'Abby', 'M', 4, '2000-02-23 00:00:00', '1993-04-16', 1, NULL, NULL),
-(115, 11, 'Fluffy', 'F', 1, '2000-04-07 00:00:00', '1993-09-11', 1, NULL, NULL),
-(116, 10, 'Holly', 'F', 3, '2000-04-14 00:00:00', '1993-04-16', 1, NULL, NULL),
-(117, 7, 'Precious', 'F', 10, '2000-05-05 00:00:00', '1992-02-04', 1, NULL, NULL),
-(118, 6, 'Dusty', 'M', 7, '2000-07-07 00:00:00', '1994-03-15', 1, NULL, NULL),
-(119, 10, 'Blackie', 'F', 1, '2000-07-17 00:00:00', '1994-04-04', 1, NULL, NULL),
-(120, 8, 'Sassy', 'F', 2, '2000-11-14 00:00:00', '1994-03-23', 1, NULL, NULL);
+INSERT INTO `pets` (`id`, `id_public`, `pet_type_id`, `name`, `sex`, `owner_id`, `registered_since`, `date_of_birth`, `is_alive`, `neutered`, `note`) VALUES
+(61, 61, 4, 'Max', 'M', 4, '1995-03-02 00:00:00', '1994-10-07', 1, NULL, NULL),
+(62, 62, 4, 'Molly', 'M', 3, '1995-04-14 00:00:00', '1994-09-28', 1, NULL, NULL),
+(63, 63, 7, 'Buddy', 'M', 7, '1995-05-04 00:00:00', '1994-08-24', 1, NULL, NULL),
+(64, 64, 7, 'Maggie', 'F', 7, '1995-05-10 00:00:00', '1993-04-19', 1, NULL, NULL),
+(65, 65, 6, 'Lady', 'F', 8, '1995-06-30 00:00:00', '1992-08-25', 1, NULL, NULL),
+(66, 66, 3, 'Misty', 'M', 8, '1995-07-20 00:00:00', '1993-04-19', 1, NULL, NULL),
+(67, 67, 4, 'Sam', 'M', 8, '1995-08-03 00:00:00', '1994-01-12', 0, NULL, NULL),
+(68, 68, 13, 'Brandy', 'F', 3, '1995-08-15 00:00:00', '1994-03-15', 1, NULL, NULL),
+(69, 69, 1, 'Lucky', 'F', 6, '1995-09-07 00:00:00', '1994-10-26', 1, 1, NULL),
+(70, 70, 11, 'Shadow', 'M', 10, '1995-09-12 00:00:00', '1992-02-23', 0, NULL, NULL),
+(71, 71, 1, 'Bear', 'F', 9, '1996-01-04 00:00:00', '1993-07-22', 1, NULL, NULL),
+(72, 72, 12, 'Samantha', 'F', 10, '1996-03-18 00:00:00', '1994-09-03', 1, NULL, NULL),
+(73, 73, 10, 'Pepper', 'F', 2, '1996-03-19 00:00:00', '1994-05-08', 1, NULL, NULL),
+(74, 74, 4, 'Ginger', 'F', 1, '1996-05-09 00:00:00', '1994-06-12', 1, NULL, NULL),
+(75, 75, 15, 'Jake', 'M', 10, '1996-06-18 00:00:00', '1993-02-28', 1, NULL, NULL),
+(76, 76, 11, 'Missy', 'F', 6, '1996-07-01 00:00:00', '1994-03-13', 1, NULL, NULL),
+(77, 77, 14, 'Muffin', 'M', 2, '1996-07-31 00:00:00', '1993-05-22', 1, NULL, NULL),
+(78, 78, 1, 'Charlie', 'F', 3, '1996-08-12 00:00:00', '1992-08-06', 1, NULL, NULL),
+(79, 79, 4, 'Lucy', 'F', 3, '1996-12-13 00:00:00', '1992-07-04', 1, NULL, NULL),
+(80, 80, 5, 'Rusty', 'M', 2, '1997-01-03 00:00:00', '1992-12-02', 1, NULL, NULL),
+(81, 81, 10, 'Bandit', 'M', 7, '1997-02-28 00:00:00', '1993-11-17', 1, 1, NULL),
+(82, 82, 1, 'Daisy', 'F', 8, '1997-03-04 00:00:00', '1994-09-28', 1, NULL, NULL),
+(83, 83, 4, 'Casey', 'M', 9, '1997-03-11 00:00:00', '1993-01-28', 1, NULL, NULL),
+(84, 84, 4, 'Rocky', 'F', 7, '1997-03-27 00:00:00', '1994-12-10', 1, NULL, NULL),
+(85, 85, 10, 'Sandy', 'M', 7, '1997-04-10 00:00:00', '1994-03-07', 1, NULL, NULL),
+(86, 86, 15, 'Princess', 'M', 8, '1997-05-23 00:00:00', '1993-02-28', 1, NULL, NULL),
+(87, 87, 7, 'Toby', 'F', 10, '1997-07-03 00:00:00', '1993-09-17', 1, NULL, NULL),
+(88, 88, 1, 'Sheba', 'M', 9, '1997-07-21 00:00:00', '1994-02-19', 1, NULL, NULL),
+(89, 89, 14, 'Sadie', 'F', 7, '1997-07-31 00:00:00', '1994-09-14', 1, 1, NULL),
+(90, 90, 8, 'Smokey', 'F', 6, '1997-08-12 00:00:00', '1992-07-23', 0, NULL, NULL),
+(91, 91, 1, 'Heidi', 'F', 2, '1997-08-13 00:00:00', '1993-11-17', 1, NULL, NULL),
+(92, 92, 15, 'Mandy', 'M', 8, '1997-11-13 00:00:00', '1992-02-23', 1, NULL, NULL),
+(93, 93, 8, 'Tiger', 'F', 2, '1997-11-17 00:00:00', '1994-08-24', 1, NULL, NULL),
+(94, 94, 3, 'Baby', 'M', 5, '1997-11-21 00:00:00', '1993-05-22', 1, NULL, NULL),
+(95, 95, 12, 'Buster', 'M', 8, '1997-12-24 00:00:00', '1993-04-16', 1, NULL, NULL),
+(96, 96, 3, 'Katie', 'F', 3, '1998-01-02 00:00:00', '1994-01-12', 1, NULL, NULL),
+(97, 97, 1, 'Murphy', 'F', 6, '1998-02-19 00:00:00', '1994-06-12', 1, NULL, NULL),
+(98, 98, 8, 'Patches', 'M', 9, '1998-04-01 00:00:00', '1994-05-23', 1, NULL, NULL),
+(99, 99, 3, 'Sasha', 'F', 7, '1998-04-14 00:00:00', '1993-08-27', 1, NULL, NULL),
+(100, 100, 10, 'Buffy', 'F', 5, '1998-04-27 00:00:00', '1994-10-07', 1, NULL, NULL),
+(101, 101, 15, 'Nikki', 'F', 4, '1998-04-29 00:00:00', '1994-09-14', 1, 1, NULL),
+(102, 102, 13, 'Cody', 'M', 9, '1998-10-23 00:00:00', '1994-08-16', 1, 1, NULL),
+(103, 103, 11, 'Bailey', 'F', 5, '1998-11-23 00:00:00', '1993-02-26', 1, NULL, NULL),
+(104, 104, 9, 'Penny', 'F', 8, '1999-02-05 00:00:00', '1994-09-14', 0, NULL, NULL),
+(105, 105, 14, 'Tasha', 'F', 9, '1999-02-24 00:00:00', '1992-07-04', 1, NULL, NULL),
+(106, 106, 9, 'Chelsea', 'F', 1, '1999-06-04 00:00:00', '1993-11-17', 1, NULL, NULL),
+(107, 107, 12, 'Annie', 'M', 9, '1999-06-09 00:00:00', '1994-09-17', 1, NULL, NULL),
+(108, 108, 1, 'Angel', 'F', 7, '1999-08-19 00:00:00', '1993-02-26', 1, NULL, NULL),
+(109, 109, 2, 'Kitty', 'F', 7, '1999-09-03 00:00:00', '1992-09-27', 1, NULL, NULL),
+(110, 110, 4, 'Alex', 'F', 3, '1999-10-28 00:00:00', '1992-07-23', 1, NULL, NULL),
+(111, 111, 7, 'Barney', 'M', 4, '1999-11-05 00:00:00', '1994-08-17', 1, NULL, NULL),
+(112, 112, 10, 'Duke', 'M', 1, '2000-01-11 00:00:00', '1994-03-13', 1, NULL, NULL),
+(113, 113, 15, 'Sparky', 'M', 1, '2000-02-17 00:00:00', '1992-02-23', 1, NULL, NULL),
+(114, 114, 3, 'Abby', 'M', 4, '2000-02-23 00:00:00', '1993-04-16', 1, NULL, NULL),
+(115, 115, 11, 'Fluffy', 'F', 1, '2000-04-07 00:00:00', '1993-09-11', 1, NULL, NULL),
+(116, 116, 10, 'Holly', 'F', 3, '2000-04-14 00:00:00', '1993-04-16', 1, NULL, NULL),
+(117, 117, 7, 'Precious', 'F', 10, '2000-05-05 00:00:00', '1992-02-04', 1, NULL, NULL),
+(118, 118, 6, 'Dusty', 'M', 7, '2000-07-07 00:00:00', '1994-03-15', 1, NULL, NULL),
+(119, 119, 10, 'Blackie', 'F', 1, '2000-07-17 00:00:00', '1994-04-04', 1, NULL, NULL),
+(120, 120, 8, 'Sassy', 'F', 2, '2000-11-14 00:00:00', '1994-03-23', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -732,12 +677,6 @@ CREATE TABLE IF NOT EXISTS `postal_addresses` (
   PRIMARY KEY (`id`),
   KEY `country` (`country`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Postal address of an entity (be it a person, organization)' AUTO_INCREMENT=32 ;
-
---
--- RELATIONS FOR TABLE `postal_addresses`:
---   `country`
---       `countries` -> `iso_code`
---
 
 --
 -- Dumping data for table `postal_addresses`
@@ -807,6 +746,8 @@ CREATE TABLE IF NOT EXISTS `treatments` (
   `treatment_type_id` bigint(20) DEFAULT NULL,
   `start_booked` datetime DEFAULT NULL,
   `start_actual` datetime DEFAULT NULL,
+  `end_booked` datetime DEFAULT NULL,
+  `end_actual` datetime DEFAULT NULL,
   `clinic_id` bigint(20) NOT NULL,
   `pet_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
@@ -818,36 +759,24 @@ CREATE TABLE IF NOT EXISTS `treatments` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
 
 --
--- RELATIONS FOR TABLE `treatments`:
---   `employee_id`
---       `employees` -> `id`
---   `treatment_type_id`
---       `treatment_types` -> `id`
---   `clinic_id`
---       `clinics` -> `id`
---   `pet_id`
---       `pets` -> `id`
---
-
---
 -- Dumping data for table `treatments`
 --
 
-INSERT INTO `treatments` (`id`, `id_public`, `employee_id`, `treatment_type_id`, `start_booked`, `start_actual`, `clinic_id`, `pet_id`) VALUES
-(1, 1, 4, 2, '2010-11-15 15:00:00', '2010-11-15 15:15:00', 1, 91),
-(2, 2, 4, 2, '2010-11-16 15:00:00', '2010-11-16 15:15:00', 1, 97),
-(3, 3, 18, 2, '2010-01-16 15:00:00', '2010-01-16 15:15:00', 6, 108),
-(4, 4, 18, 14, '2009-12-23 08:00:00', '2010-12-23 08:00:00', 6, 108),
-(5, 5, 4, 14, '2010-11-10 15:00:00', '2010-11-10 15:15:00', 1, 91),
-(6, 6, 4, 14, '2010-11-10 15:00:00', '2010-11-10 15:15:00', 1, 97),
-(7, 7, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 64),
-(8, 8, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 84),
-(9, 9, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 89),
-(10, 10, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 99),
-(11, 11, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 108),
-(12, 12, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 104),
-(13, 13, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 82),
-(14, 14, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 75);
+INSERT INTO `treatments` (`id`, `id_public`, `employee_id`, `treatment_type_id`, `start_booked`, `start_actual`, `end_booked`, `end_actual`, `clinic_id`, `pet_id`) VALUES
+(1, 1, 4, 2, '2010-11-15 15:00:00', '2010-11-15 15:15:00', '2010-11-15 15:00:00', '2010-11-15 15:15:00', 1, 91),
+(2, 2, 4, 2, '2010-11-16 15:00:00', '2010-11-16 15:15:00', '2010-11-16 15:00:00', '2010-11-16 15:15:00', 1, 97),
+(3, 3, 18, 2, '2010-01-16 15:00:00', '2010-01-16 15:15:00', '2010-01-16 15:00:00', '2010-01-16 15:15:00', 6, 108),
+(4, 4, 18, 14, '2009-12-23 08:00:00', '2010-12-23 08:00:00', '2009-12-23 08:00:00', '2010-12-23 08:00:00', 6, 108),
+(5, 5, 4, 14, '2010-11-10 15:00:00', '2010-11-10 15:15:00', '2010-11-10 15:00:00', '2010-11-10 15:15:00', 1, 91),
+(6, 6, 4, 14, '2010-11-10 15:00:00', '2010-11-10 15:15:00', '2010-11-10 15:00:00', '2010-11-10 15:15:00', 1, 97),
+(7, 7, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 64),
+(8, 8, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 84),
+(9, 9, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 89),
+(10, 10, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 99),
+(11, 11, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 108),
+(12, 12, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 104),
+(13, 13, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 82),
+(14, 14, 18, 14, '2009-01-23 08:00:00', '2010-01-23 08:00:00', '2009-01-23 08:00:00', '2010-01-23 08:00:00', 6, 75);
 
 -- --------------------------------------------------------
 
