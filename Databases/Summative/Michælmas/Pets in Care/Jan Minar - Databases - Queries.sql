@@ -19,10 +19,15 @@
 -- These queries are for the summative assignment in Computer Systems
 -- (Databases), Michaelmas 2010
 
--- The assignment is quoted verbatim below.
+-- We quote each assignment question below, our solutions follow.
 --
 -- "1. Listing the Manager’s name, clinic address, and telephone number for
 -- each clinic, ordered by clinic number. [3 marks]"
+
+-- Please note that in this as well as all the other solutions, we strive
+-- to format the output properly.  This necessarily means that the queries
+-- grow longer then they would if we just presented raw output.  They are
+-- also much more fun to write.
 
 SELECT CONCAT(e.first_name, ' ', e.last_name) AS 'Manager Name', CONCAT(p.line_1, ', ', IFNULL(p.line_2,''), ', ', p.city, ', ', p.county, ', ', p.zip, ', ', cc.english_name) AS 'Postal Address', e.phone_number AS 'Phone Number' FROM clinics AS c JOIN employees AS e ON c.id = e.clinic_id JOIN postal_addresses as p ON c.postal_address_id = p.id JOIN countries as cc ON cc.iso_code = p.country WHERE e.job_position_id = (SELECT id FROM job_positions WHERE name = 'Manager') ORDER BY c.id_public;
 
@@ -45,10 +50,11 @@ SELECT CONCAT(first_name, ' ', last_name) AS 'Staff Name', employee_number AS 'S
 
 -- "5. List the maximum, minimum, and average cost for treatments [8 marks]"
 
--- Note: This is a report on the list prices, not the actual treatments
+-- Note: This is a report on both the list prices and the actual treatments
 --       performed.
 
-SELECT (SELECT ROUND(MAX(price) / 100, 2) FROM treatment_types) AS 'Maximum Treatment Cost', (SELECT ROUND(MIN(price) / 100, 2) FROM treatment_types) AS 'Minimum Treatment Cost', (SELECT ROUND(AVG(price) / 100, 2) FROM treatment_types) AS 'Average Treatment Cost';
+SELECT (SELECT ROUND(MAX(price) / 100, 2) FROM treatment_types) AS 'Maximum Available Treatment Cost', (SELECT ROUND(MIN(price) / 100, 2) FROM treatment_types) AS 'Minimum Available Treatment Cost', (SELECT ROUND(AVG(price) / 100, 2) FROM treatment_types) AS 'Average Available Treatment Cost', (SELECT ROUND(MAX(treatment_types.price) / 100, 2) FROM treatment_types JOIN treatments ON treatment_types.id = treatments.treatment_type_id) AS 'Maximum Performed Treatment Cost', (SELECT ROUND(MIN(treatment_types.price) / 100, 2) FROM treatment_types JOIN treatments ON treatment_types.id = treatments.treatment_type_id) AS 'Minimum Performed Treatment Cost', (SELECT ROUND(AVG(treatment_types.price) / 100, 2) FROM treatment_types JOIN treatments ON treatment_types.id = treatments.treatment_type_id) AS 'Average Performed Treatment Cost';
+
 
 -- "6. What is the revenue for the practice generated from feline hysterectomy
 -- operations during November 2010 [8 marks]"
@@ -58,4 +64,9 @@ SELECT ROUND(SUM(treatment_types.price) / 100, 2) AS 'Feline Hysterectomy Revenu
 -- "7. List the total number of pets registered with the practice in each pet
 -- type, ordered by pet type. [8 marks]"
 
+-- Note: Order the list alphabetically, for a good measure.
+
 SELECT pet_types.name as 'Pet Type', COUNT(*) AS 'Registered Pets' FROM pet_types JOIN pets ON pet_types.id = pets.pet_type_id GROUP BY pet_types.id ORDER BY pet_types.name;
+
+
+-- END OF FILE
